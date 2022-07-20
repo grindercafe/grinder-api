@@ -29,8 +29,8 @@ class DatabaseSeeder extends Seeder
 
         Event::create([
             'date'=> '2022-07-20',
-            'start_time'=> '09:00 pm',
-            'end_time'=> '12:00 am',
+            'start_time'=> '09:00',
+            'end_time'=> '00:00',
             'singer_name'=> 'name',
             'singer_img'=> 'img',
             'available_chairs'=> 140,
@@ -39,8 +39,8 @@ class DatabaseSeeder extends Seeder
 
         Event::create([
             'date'=> '2022-07-21',
-            'start_time'=> '09:00 pm',
-            'end_time'=> '12:00 am',
+            'start_time'=> '09:00',
+            'end_time'=> '00:00',
             'singer_name'=> 'name1',
             'singer_img'=> 'img1',
             'available_chairs'=> 140,
@@ -49,8 +49,8 @@ class DatabaseSeeder extends Seeder
 
         Event::create([
             'date'=> '2022-07-22',
-            'start_time'=> '09:00 pm',
-            'end_time'=> '12:00 am',
+            'start_time'=> '09:00',
+            'end_time'=> '00:00',
             'singer_name'=> 'name2',
             'singer_img'=> 'img2',
             'available_chairs'=> 140,
@@ -64,12 +64,12 @@ class DatabaseSeeder extends Seeder
 
         Customer::create([
             'name'=> 'ahmed',
-            'phone_number'=> '0500000000'
+            'phone_number'=> '0500000001'
         ]);
 
         Customer::create([
             'name'=> 'sohad',
-            'phone_number'=> '0500000000'
+            'phone_number'=> '0500000002'
         ]);
 
         BookingStatus::create([
@@ -84,7 +84,7 @@ class DatabaseSeeder extends Seeder
             'name'=> 'active'
         ]);
 
-        Booking::factory()->create(20);
+        Booking::factory(20)->create();
 
     }
 }
