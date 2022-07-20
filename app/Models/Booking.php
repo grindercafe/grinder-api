@@ -16,4 +16,20 @@ class Booking extends Model
         'customer_id',
         'booking_status_id'
     ];
+
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(BookingStatus::class);
+    }
+    
 }
