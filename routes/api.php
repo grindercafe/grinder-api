@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookingStatusController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EventController;
 use Illuminate\Http\Request;
@@ -31,3 +32,9 @@ Route::get('/customers/{id}', [CustomerController::class, 'show']);
 Route::post('/customer', [CustomerController::class, 'store']);
 Route::put('/customers/{id}', [CustomerController::class, 'update']);
 Route::delete('/customers/{id}', [CustomerController::class, 'delete']);
+
+Route::get('/status', [BookingStatusController::class, 'index']);
+Route::get('/status/{id}', [BookingStatusController::class, 'show']);
+Route::post('/status', [BookingStatusController::class, 'store']);
+Route::put('/status/{id}', [BookingStatusController::class, 'update']);
+Route::delete('/status/{id}', [BookingStatusController::class, 'delete']);
