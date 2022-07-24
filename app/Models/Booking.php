@@ -10,11 +10,14 @@ class Booking extends Model
     use HasFactory;
 
     protected $fillable = [
+        'booking_number',
         'party_size',
         'total_price',
         'event_id',
         'customer_id',
-        'booking_status_id'
+        'booking_status_id',
+        'cancelled_at',
+        'is_message_sent'
     ];
 
     public function event()
@@ -25,11 +28,6 @@ class Booking extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class);
-    }
-
-    public function status()
-    {
-        return $this->belongsTo(BookingStatus::class);
     }
     
 }

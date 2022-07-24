@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use App\Models\Event;
 use Illuminate\Http\Request;
 
@@ -62,5 +63,10 @@ class EventController extends Controller
             'message'=> 'event deleted successfully',
             'data'=> $event
         ]);
+    }
+
+    public function bookings_by_event($event_id)
+    {
+        return Booking::where('event_id', $event_id)->count();
     }
 }

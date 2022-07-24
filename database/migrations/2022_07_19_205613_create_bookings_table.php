@@ -20,7 +20,8 @@ return new class extends Migration
             $table->double('total_price');
             $table->foreignId('event_id')->constrained();
             $table->foreignId('customer_id')->constrained();
-            $table->foreignId('booking_status_id')->constrained();
+            $table->boolean('is_message_sent')->default(0);
+            $table->timestamp('cancelled_at')->nullable();
             $table->timestamps();
         });
     }

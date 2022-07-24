@@ -72,18 +72,6 @@ class DatabaseSeeder extends Seeder
             'phone_number'=> '0500000002'
         ]);
 
-        BookingStatus::create([
-            'name'=> 'cancalled'
-        ]);
-
-        BookingStatus::create([
-            'name'=> 'message is sent'
-        ]);
-
-        BookingStatus::create([
-            'name'=> 'active'
-        ]);
-
         Booking::factory(20)->create();
 
     }

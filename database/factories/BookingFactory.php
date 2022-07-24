@@ -22,7 +22,6 @@ class BookingFactory extends Factory
             'total_price'=> $party_size * 150.0,
             'event_id'=> fake()->numberBetween(1, 3),
             'customer_id'=> fake()->numberBetween(1, 3),
-            'booking_status_id'=> fake()->numberBetween(1, 3),
             'booking_number'=> fake()->unique()->numberBetween(1234),
         ];
 
