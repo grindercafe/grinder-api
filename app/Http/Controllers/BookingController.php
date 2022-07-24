@@ -27,7 +27,7 @@ class BookingController extends Controller
             'event_id'=> 'required',
             'customer'=> 'required|array',
             'customer.name'=> 'required|max:255',
-            'customer.phone_number'=> 'required'
+            'customer.phone_number'=> 'required|unique:App\Models\Customer,phone_number'
         ]);
 
         $event = Event::findOrFail($request->event_id);
