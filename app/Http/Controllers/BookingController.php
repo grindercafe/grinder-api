@@ -25,7 +25,9 @@ class BookingController extends Controller
         $this->validate($request, [
             'party_size'=> 'required|numeric|max:200',
             'event_id'=> 'required',
-            'customer'=> 'required'
+            'customer'=> 'required|array',
+            'customer.name'=> 'required|max:255',
+            'customer.phone_number'=> 'required'
         ]);
 
         $event = Event::findOrFail($request->event_id);
@@ -37,7 +39,7 @@ class BookingController extends Controller
             ]);
         }
 
-        if($event->available_chairs - $request->party_size < 0) {
+        if($event->is_over_available_seats($request->party_size)) {
             return response()->json([
                 'success'=> false,
                 'message'=> 'exceeded the number of available seats'
@@ -61,7 +63,8 @@ class BookingController extends Controller
         $createdBooking = Booking::create($booking);
         
         $event->update([
-            'available_chairs'=> $event->available_chairs - $request->party_size
+            'available_chairs'=> 
+            $event->decrease_available_seats($request->party_size),
         ]);
 
         return response()->json([
@@ -77,7 +80,9 @@ class BookingController extends Controller
 
         $event = Event::findOrFail($booking->event_id);
 
-        $event->update(['available_chairs'=> $event->available_chairs + $booking->party_size]);
+        $event->update([
+            'available_chairs'=> $event->increase_available_seats($request->party_size)
+        ]);
 
         $booking->destroy($id);
 
@@ -94,7 +99,9 @@ class BookingController extends Controller
 
         $event = Event::findOrFail($booking->event_id);
 
-        $event->update(['available_chairs'=> $event->available_chairs + $booking->party_size]);
+        $event->update([
+            'available_chairs'=> $event->increase_available_seats($request->party_size)
+        ]);
 
         $booking->update(['cancelled_at'=> now()]);
 

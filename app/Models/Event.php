@@ -24,4 +24,19 @@ class Event extends Model
     {
         return $this->hasMany(Booking::class);
     }
+
+    public function decrease_available_seats($party_size)
+    {
+        return $this->available_chairs - $party_size;
+    }
+
+    public function increase_available_seats($party_size)
+    {
+        return $this->available_chairs + $party_size;
+    }
+
+    public function is_over_available_seats($party_size)
+    {
+        return $this->available_chairs - $party_size < 0;
+    }
 }
