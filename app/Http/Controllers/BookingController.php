@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\BookingResource;
 use App\Models\Booking;
+use App\Models\Customer;
 use App\Models\Event;
 use Illuminate\Http\Request;
 
@@ -22,17 +22,48 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'party_size'=> 'required|numeric|max:200',
+            'event_id'=> 'required',
+            'customer'=> 'required'
+        ]);
+
+        $event = Event::findOrFail($request->event_id);
+
+        if($request->party_size <= 0) {
+            return response()->json([
+                'success'=> false,
+                'message'=> 'you can\'t select less than 1'
+            ]);
+        }
+
+        if($event->available_chairs - $request->party_size < 0) {
+            return response()->json([
+                'success'=> false,
+                'message'=> 'exceeded the number of available seats'
+            ]);
+        }
+
+        $customer = Customer::create([
+            'name'=> $request->customer['name'],
+            'phone_number'=> $request->customer['phone_number']
+        ]);
+        
         $booking = [
-            'party_size'=> $request->event_id,
-            'total_price'=> $request->total_price,
+            'party_size'=> $request->party_size,
+            'total_price'=> $event->price_per_person * $request->party_size,
             "event_id"=> $request->event_id,
-            'customer_id'=> $request->customer_id,
+            'customer_id'=> $customer->id,
             'booking_status_id'=> $request->booking_status_id,
             'booking_number'=> $request->booking_number
         ];
 
         $createdBooking = Booking::create($booking);
         
+        $event->update([
+            'available_chairs'=> $event->available_chairs - $request->party_size
+        ]);
+
         return response()->json([
             'success'=> true,
             'message'=> 'booking created successfully',
@@ -43,6 +74,10 @@ class BookingController extends Controller
     public function delete($id)
     {
         $booking = Booking::findOrFail($id);
+
+        $event = Event::findOrFail($booking->event_id);
+
+        $event->update(['available_chairs'=> $event->available_chairs + $booking->party_size]);
 
         $booking->destroy($id);
 
@@ -56,6 +91,10 @@ class BookingController extends Controller
     public function cancel($id)
     {
         $booking = Booking::findOrFail($id);
+
+        $event = Event::findOrFail($booking->event_id);
+
+        $event->update(['available_chairs'=> $event->available_chairs + $booking->party_size]);
 
         $booking->update(['cancelled_at'=> now()]);
 

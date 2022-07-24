@@ -24,6 +24,5 @@ class BookingFactory extends Factory
             'customer_id'=> fake()->numberBetween(1, 3),
             'booking_number'=> fake()->unique()->numberBetween(1234),
         ];
-
     }
 }

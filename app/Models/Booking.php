@@ -10,15 +10,20 @@ class Booking extends Model
     use HasFactory;
 
     protected $fillable = [
-        'booking_number',
         'party_size',
         'total_price',
         'event_id',
         'customer_id',
-        'booking_status_id',
         'cancelled_at',
         'is_message_sent'
     ];
+
+    public static function booted()
+    {
+        static::creating(function ($model) {
+            $model->booking_number = mt_rand(111111, 999999);
+        });
+    }
 
     public function event()
     {
@@ -29,5 +34,4 @@ class Booking extends Model
     {
         return $this->belongsTo(Customer::class);
     }
-    
 }
