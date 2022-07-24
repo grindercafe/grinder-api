@@ -20,6 +20,16 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'date'=> 'required|date',
+            'start_time' => 'date_format:H:i',
+            'end_time' => 'date_format:H:i|after:start_time',
+            'singer_name'=> 'required|string',
+            'singer_img'=> 'required|url',
+            'available_chairs'=> 'required|numeric',
+            'price_per_person'=> 'required'
+        ]);
+
         $event = [
             'date'=> $request->date,
             'start_time'=> $request->start_time,

@@ -27,7 +27,7 @@ class BookingController extends Controller
             'event_id'=> 'required',
             'customer'=> 'required|array',
             'customer.name'=> 'required|max:255',
-            'customer.phone_number'=> 'required|unique:App\Models\Customer,phone_number'
+            'customer.phone_number'=> 'required'
         ]);
 
         $event = Event::findOrFail($request->event_id);
@@ -46,11 +46,15 @@ class BookingController extends Controller
             ]);
         }
 
-        $customer = Customer::create([
-            'name'=> $request->customer['name'],
-            'phone_number'=> $request->customer['phone_number']
-        ]);
+        $customer = Customer::where('phone_number', $request->customer['phone_number'])->first();
         
+        if(!$customer) {
+            $customer = Customer::create([
+                'name'=> $request->customer['name'],
+                'phone_number'=> $request->customer['phone_number']
+            ]);
+        }
+
         $booking = [
             'party_size'=> $request->party_size,
             'total_price'=> $event->price_per_person * $request->party_size,
@@ -81,7 +85,7 @@ class BookingController extends Controller
         $event = Event::findOrFail($booking->event_id);
 
         $event->update([
-            'available_chairs'=> $event->increase_available_seats($request->party_size)
+            'available_chairs'=> $event->increase_available_seats($booking->party_size)
         ]);
 
         $booking->destroy($id);
@@ -100,7 +104,7 @@ class BookingController extends Controller
         $event = Event::findOrFail($booking->event_id);
 
         $event->update([
-            'available_chairs'=> $event->increase_available_seats($request->party_size)
+            'available_chairs'=> $event->increase_available_seats($booking->party_size)
         ]);
 
         $booking->update(['cancelled_at'=> now()]);
