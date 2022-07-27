@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Booking;
+use App\Models\Customer;
 use App\Models\Event;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,8 +19,13 @@ class BookingResource extends JsonResource
     {
         return [
             'id'=> $this->id,
-            'singer_name'=> $this->singer_name,
-            'bookings'=> Booking::where('event_id', $this->id)->count(),
+            'booking_number'=> $this->booking_number,
+            'event'=> Event::findOrFail($this->event_id),
+            'customer'=> Customer::findOrFail($this->customer_id),
+            'party_size'=> $this->party_size,
+            'total_price'=> $this->total_price,
+            'is_message_sent'=> $this->is_message_sent,
+            'cancelled_at'=> $this->cancelled_at
         ];
     }
 }

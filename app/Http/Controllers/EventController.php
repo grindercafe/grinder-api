@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\EventResource;
 use App\Models\Booking;
 use App\Models\Event;
 use Illuminate\Http\Request;
@@ -10,12 +11,12 @@ class EventController extends Controller
 {
     public function index()
     {
-        return Event::all();
+        return EventResource::collection(Event::all());
     }
     
     public function show($id)
     {
-        return Event::findOrFail($id);
+        return new EventResource(Event::findOrFail($id));
     }
 
     public function store(Request $request)

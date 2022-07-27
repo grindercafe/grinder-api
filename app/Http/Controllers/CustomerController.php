@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 
@@ -9,12 +10,12 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        return Customer::all();
+        return CustomerResource::collection(Customer::all());
     }
 
     public function show($id)
     {
-        return Customer::findOrFail($id);
+        return new CustomerResource(Customer::findOrFail($id));
     }
 
     public function store(Request $request)

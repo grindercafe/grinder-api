@@ -20,6 +20,12 @@ class Event extends Model
         'price_per_person'
     ];
 
+    protected $casts = [
+        'date' => 'datetime',
+        'start_time' => 'datetime',
+        'end_time' => 'datetime'
+    ];
+
     public function bookings()
     {
         return $this->hasMany(Booking::class);

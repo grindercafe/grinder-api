@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BookingResource;
 use App\Models\Booking;
 use App\Models\Customer;
 use App\Models\Event;
@@ -11,13 +12,12 @@ class BookingController extends Controller
 {
     public function index()
     {
-        return Booking::all();
-        // return BookingResource::collection(Booking::all());
+        return BookingResource::collection(Booking::all());
     }
 
     public function show($id)
     {
-        return Booking::findOrFail($id);
+        return new BookingResource(Booking::findOrFail($id));
     }
 
     public function store(Request $request)
