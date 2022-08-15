@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Booking;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CustomerResource extends JsonResource
@@ -19,7 +20,8 @@ class CustomerResource extends JsonResource
             'name'=> $this->name,
             'phone_number'=> $this->phone_number,
             'token'=> $this->token,
-            'uuid'=> $this->uuid
+            'uuid'=> $this->uuid,
+            'num_of_bookings'=> Booking::where('customer_id', $this->id)->count()
         ];
     }
 }

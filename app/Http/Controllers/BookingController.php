@@ -12,7 +12,7 @@ class BookingController extends Controller
 {
     public function index()
     {
-        return BookingResource::collection(Booking::all());
+        return BookingResource::collection(Booking::orderBy('created_at', 'desc')->get());
     }
 
     public function show($id)
@@ -32,18 +32,18 @@ class BookingController extends Controller
 
         $event = Event::findOrFail($request->event_id);
 
-        if($request->party_size <= 0) {
+        if($request->party_size < 2) {
             return response()->json([
                 'success'=> false,
                 'message'=> 'you can\'t select less than 1'
-            ]);
+            ], 404);
         }
 
         if($event->is_over_available_seats($request->party_size)) {
             return response()->json([
                 'success'=> false,
                 'message'=> 'exceeded the number of available seats'
-            ]);
+            ], 404);
         }
 
         $customer = Customer::where('phone_number', $request->customer['phone_number'])->first();
@@ -134,5 +134,12 @@ class BookingController extends Controller
     public function bookings_by_event($event_id)
     {
         return Booking::where('event_id', $event_id)->get();
+    }
+
+    public function activate($id)
+    {
+        $booking = Booking::findOrFail($id);
+
+        $booking->update(['cancelled_at'=> null]);
     }
 }

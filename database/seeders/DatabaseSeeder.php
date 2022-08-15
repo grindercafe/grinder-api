@@ -57,22 +57,22 @@ class DatabaseSeeder extends Seeder
             'price_per_person'=> $price_per_person,
         ]);
 
-        Customer::create([
-            'name'=> 'mubarak',
-            'phone_number'=> '0500000000'
-        ]);
+        // Customer::create([
+        //     'name'=> 'mubarak',
+        //     'phone_number'=> '0500000000'
+        // ]);
 
-        Customer::create([
-            'name'=> 'ahmed',
-            'phone_number'=> '0500000001'
-        ]);
+        // Customer::create([
+        //     'name'=> 'ahmed',
+        //     'phone_number'=> '0500000001'
+        // ]);
 
-        Customer::create([
-            'name'=> 'sohad',
-            'phone_number'=> '0500000002'
-        ]);
+        // Customer::create([
+        //     'name'=> 'sohad',
+        //     'phone_number'=> '0500000002'
+        // ]);
 
-        Booking::factory(20)->create();
+        // Booking::factory(20)->create();
 
     }
 }

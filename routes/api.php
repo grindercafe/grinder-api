@@ -27,20 +27,20 @@ Route::get('/events/{id}',[EventController::class, 'show']);
 Route::post('/event',[EventController::class, 'store']);
 Route::put('/events/{id}', [EventController::class, 'update']);
 Route::delete('/events/{id}',[EventController::class, 'delete']);
-
-Route::get('/event/{id}/bookings', [EventController::class, 'bookings_by_event']);
+Route::get('/events/{id}/bookings', [EventController::class, 'bookings_by_event']);
 
 Route::get('/customers', [CustomerController::class, 'index']);
 Route::get('/customers/{id}', [CustomerController::class, 'show']);
 Route::post('/customer', [CustomerController::class, 'store']);
 Route::put('/customers/{id}', [CustomerController::class, 'update']);
 Route::delete('/customers/{id}', [CustomerController::class, 'delete']);
+Route::get('/customers/{id}/bookings', [CustomerController::class, 'bookings_by_customer']);
 
-Route::get('/status', [BookingStatusController::class, 'index']);
-Route::get('/status/{id}', [BookingStatusController::class, 'show']);
-Route::post('/status', [BookingStatusController::class, 'store']);
-Route::put('/status/{id}', [BookingStatusController::class, 'update']);
-Route::delete('/status/{id}', [BookingStatusController::class, 'delete']);
+// Route::get('/status', [BookingStatusController::class, 'index']);
+// Route::get('/status/{id}', [BookingStatusController::class, 'show']);
+// Route::post('/status', [BookingStatusController::class, 'store']);
+// Route::put('/status/{id}', [BookingStatusController::class, 'update']);
+// Route::delete('/status/{id}', [BookingStatusController::class, 'delete']);
 
 Route::get('/bookings', [BookingController::class, 'index']);
 Route::get('/bookings/{id}', [BookingController::class, 'show']);

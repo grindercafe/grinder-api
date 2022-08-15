@@ -24,7 +24,7 @@ class EventController extends Controller
         $this->validate($request, [
             'date'=> 'required|date',
             'start_time' => 'date_format:H:i',
-            'end_time' => 'date_format:H:i|after:start_time',
+            'end_time' => 'date_format:H:i',
             'singer_name'=> 'required|string',
             'singer_img'=> 'required|url',
             'available_chairs'=> 'required|numeric',
