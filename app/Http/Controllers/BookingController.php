@@ -35,13 +35,15 @@ class BookingController extends Controller
         if($request->party_size < 2) {
             return response()->json([
                 'success'=> false,
-                'message'=> 'you can\'t select less than 1'
+                'code'=> 100,
+                'message'=> 'you can\'t select less than 2'
             ], 404);
         }
 
         if($event->is_over_available_seats($request->party_size)) {
             return response()->json([
                 'success'=> false,
+                'code'=> 101,
                 'message'=> 'exceeded the number of available seats'
             ], 404);
         }
