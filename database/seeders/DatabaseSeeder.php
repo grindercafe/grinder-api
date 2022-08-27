@@ -110,7 +110,7 @@ class DatabaseSeeder extends Seeder
         Table::create(['number'=> 9, 'capacity'=> 2]);
         Table::create(['number'=> 4, 'capacity'=> 2]);
         Table::create(['number'=> 5, 'capacity'=> 2]);
-        Table::create(['number'=> 6, 'clcapacity'=> 2]);
+        Table::create(['number'=> 6, 'capacity'=> 2]);
         Table::create(['number'=> 1, 'capacity'=> 4]);
         Table::create(['number'=> 2, 'capacity'=> 4]);
         Table::create(['number'=> 3, 'capacity'=> 4]);
