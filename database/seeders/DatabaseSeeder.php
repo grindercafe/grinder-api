@@ -8,6 +8,7 @@ use App\Models\Booking;
 use App\Models\BookingStatus;
 use App\Models\Customer;
 use App\Models\Event;
+use App\Models\Table;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,7 +20,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $price_per_person = 150.0;
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
@@ -32,9 +32,8 @@ class DatabaseSeeder extends Seeder
             'start_time'=> '09:00',
             'end_time'=> '00:00',
             'singer_name'=> 'name',
-            'singer_img'=> 'img',
-            'available_chairs'=> 140,
-            'price_per_person'=> $price_per_person,
+            'singer_img'=> 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+            'price'=> 150.0,
         ]);
 
         Event::create([
@@ -42,9 +41,8 @@ class DatabaseSeeder extends Seeder
             'start_time'=> '09:00',
             'end_time'=> '00:00',
             'singer_name'=> 'name1',
-            'singer_img'=> 'img1',
-            'available_chairs'=> 140,
-            'price_per_person'=> $price_per_person,
+            'singer_img'=> 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+            'price'=> 200.0,
         ]);
 
         Event::create([
@@ -52,26 +50,71 @@ class DatabaseSeeder extends Seeder
             'start_time'=> '09:00',
             'end_time'=> '00:00',
             'singer_name'=> 'name2',
-            'singer_img'=> 'img2',
-            'available_chairs'=> 140,
-            'price_per_person'=> $price_per_person,
+            'singer_img'=> 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+            'price'=> 180.0,
         ]);
 
-        // Customer::create([
-        //     'name'=> 'mubarak',
-        //     'phone_number'=> '0500000000'
-        // ]);
+        Customer::create([
+            'name'=> 'mubarak',
+            'phone_number'=> '0500000000'
+        ]);
 
-        // Customer::create([
-        //     'name'=> 'ahmed',
-        //     'phone_number'=> '0500000001'
-        // ]);
+        Customer::create([
+            'name'=> 'ahmed',
+            'phone_number'=> '0500000001'
+        ]);
 
-        // Customer::create([
-        //     'name'=> 'sohad',
-        //     'phone_number'=> '0500000002'
-        // ]);
+        Customer::create([
+            'name'=> 'sohad',
+            'phone_number'=> '0500000002'
+        ]);
 
+        Table::create(['number'=> 34, 'capacity'=> 4]);
+        Table::create(['number'=> 33, 'capacity'=> 3]);
+        Table::create(['number'=> 32, 'capacity'=> 4]);
+        Table::create(['number'=> 31, 'capacity'=> 2]);
+        Table::create(['number'=> 30, 'capacity'=> 4]);
+        Table::create(['number'=> 29, 'capacity'=> 4]);
+        Table::create(['number'=> 35, 'capacity'=> 3]);
+        Table::create(['number'=> 37, 'capacity'=> 3]);
+        Table::create(['number'=> 28, 'capacity'=> 2]);
+        Table::create(['number'=> 26, 'capacity'=> 4]);
+        Table::create(['number'=> 25, 'capacity'=> 4]);
+        Table::create(['number'=> 36, 'capacity'=> 3]);
+        Table::create(['number'=> 38, 'capacity'=> 2]);
+        Table::create(['number'=> 27, 'capacity'=> 2]);
+        Table::create(['number'=> 39, 'capacity'=> 3]);
+        Table::create(['number'=> 40, 'capacity'=> 2]);
+        Table::create(['number'=> 24, 'capacity'=> 2]);
+        Table::create(['number'=> 23, 'capacity'=> 2]);
+        Table::create(['number'=> 22, 'capacity'=> 2]);
+        Table::create(['number'=> 21, 'capacity'=> 2]);
+        Table::create(['number'=> 20, 'capacity'=> 2]);
+        Table::create(['number'=> 19, 'capacity'=> 4]);
+        Table::create(['number'=> 41, 'capacity'=> 3]);
+        Table::create(['number'=> 42, 'capacity'=> 3]);
+        Table::create(['number'=> 16, 'capacity'=> 2]);
+        Table::create(['number'=> 17, 'capacity'=> 2]);
+        Table::create(['number'=> 18, 'capacity'=> 2]);
+        Table::create(['number'=> 15, 'capacity'=> 2]);
+        Table::create(['number'=> 43, 'capacity'=> 3]);
+        Table::create(['number'=> 44, 'capacity'=> 3]);
+        Table::create(['number'=> 10, 'capacity'=> 2]);
+        Table::create(['number'=> 11, 'capacity'=> 2]);
+        Table::create(['number'=> 12, 'capacity'=> 2]);
+        Table::create(['number'=> 13, 'capacity'=> 2]);
+        Table::create(['number'=> 14, 'capacity'=> 4]);
+        Table::create(['number'=> 45, 'capacity'=> 2]);
+        Table::create(['number'=> 7, 'capacity'=> 2]);
+        Table::create(['number'=> 8, 'capacity'=> 2]);
+        Table::create(['number'=> 9, 'capacity'=> 2]);
+        Table::create(['number'=> 4, 'capacity'=> 2]);
+        Table::create(['number'=> 5, 'capacity'=> 2]);
+        Table::create(['number'=> 6, 'clcapacity'=> 2]);
+        Table::create(['number'=> 1, 'capacity'=> 4]);
+        Table::create(['number'=> 2, 'capacity'=> 4]);
+        Table::create(['number'=> 3, 'capacity'=> 4]);
+        
         // Booking::factory(20)->create();
 
     }

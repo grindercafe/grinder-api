@@ -11,7 +11,7 @@ class EventController extends Controller
 {
     public function index()
     {
-        return EventResource::collection(Event::all());
+        return EventResource::collection(Event::latest()->get());
     }
     
     public function show($id)
@@ -27,8 +27,7 @@ class EventController extends Controller
             'end_time' => 'date_format:H:i',
             'singer_name'=> 'required|string',
             'singer_img'=> 'required|url',
-            'available_chairs'=> 'required|numeric',
-            'price_per_person'=> 'required'
+            'price'=> 'required|numeric'
         ]);
 
         $event = [
@@ -37,8 +36,7 @@ class EventController extends Controller
             'end_time'=> $request->end_time,
             'singer_name'=> $request->singer_name,
             'singer_img'=> $request->singer_img,
-            'available_chairs'=> $request->available_chairs,
-            'price_per_person'=> $request->price_per_person
+            'price'=> $request->price
         ];
         
         $createdEvent = Event::create($event);

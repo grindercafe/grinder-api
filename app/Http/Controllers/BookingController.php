@@ -5,48 +5,28 @@ namespace App\Http\Controllers;
 use App\Http\Resources\BookingResource;
 use App\Models\Booking;
 use App\Models\Customer;
-use App\Models\Event;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller 
 {
     public function index()
     {
-        return BookingResource::collection(Booking::orderBy('created_at', 'desc')->get());
+        return BookingResource::collection(Booking::latest()->get());
     }
 
-    public function show($id)
+    public function show($uuid, Request $request)
     {
-        return new BookingResource(Booking::findOrFail($id));
+        return new BookingResource(Booking::where('uuid', $uuid)->where('token', $request->query('token'))->firstOrFail());
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
-            'party_size'=> 'required|numeric|max:200',
             'event_id'=> 'required',
             'customer'=> 'required|array',
             'customer.name'=> 'required|max:255',
-            'customer.phone_number'=> 'required'
+            'customer.phone_number'=> ['required', 'regex:/^(05)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/']
         ]);
-
-        $event = Event::findOrFail($request->event_id);
-
-        if($request->party_size < 2) {
-            return response()->json([
-                'success'=> false,
-                'code'=> 100,
-                'message'=> 'you can\'t select less than 2'
-            ], 404);
-        }
-
-        if($event->is_over_available_seats($request->party_size)) {
-            return response()->json([
-                'success'=> false,
-                'code'=> 101,
-                'message'=> 'exceeded the number of available seats'
-            ], 404);
-        }
 
         $customer = Customer::where('phone_number', $request->customer['phone_number'])->first();
         
@@ -56,22 +36,19 @@ class BookingController extends Controller
                 'phone_number'=> $request->customer['phone_number']
             ]);
         }
-
+        
         $booking = [
-            'party_size'=> $request->party_size,
-            'total_price'=> $event->price_per_person * $request->party_size,
+            'total_price'=> $request->total_price,
             "event_id"=> $request->event_id,
-            'customer_id'=> $customer->id,
-            'booking_status_id'=> $request->booking_status_id,
-            'booking_number'=> $request->booking_number
+            'customer_id'=> $customer->id
         ];
 
         $createdBooking = Booking::create($booking);
+
+        // $tables = Table::find([1, 2]);
+
+        $createdBooking->tables()->attach($request->tables);
         
-        $event->update([
-            'available_chairs'=> 
-            $event->decrease_available_seats($request->party_size),
-        ]);
 
         return response()->json([
             'success'=> true,
@@ -83,12 +60,6 @@ class BookingController extends Controller
     public function delete($id)
     {
         $booking = Booking::findOrFail($id);
-
-        $event = Event::findOrFail($booking->event_id);
-
-        $event->update([
-            'available_chairs'=> $event->increase_available_seats($booking->party_size)
-        ]);
 
         $booking->destroy($id);
 
@@ -102,12 +73,6 @@ class BookingController extends Controller
     public function cancel($id)
     {
         $booking = Booking::findOrFail($id);
-
-        $event = Event::findOrFail($booking->event_id);
-
-        $event->update([
-            'available_chairs'=> $event->increase_available_seats($booking->party_size)
-        ]);
 
         $booking->update(['cancelled_at'=> now()]);
 

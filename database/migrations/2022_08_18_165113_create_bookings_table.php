@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->string('booking_number')->unique();
-            $table->integer('party_size');
-            $table->double('total_price');
             $table->foreignId('event_id')->constrained();
             $table->foreignId('customer_id')->constrained();
             $table->boolean('is_message_sent')->default(0);
+            $table->double('total_price');
             $table->timestamp('cancelled_at')->nullable();
+            $table->string('token');
+            $table->uuid('uuid');
             $table->timestamps();
         });
     }

@@ -22,8 +22,8 @@ class EventResource extends JsonResource
             'end_time'=> $this->end_time,
             'singer_name'=> $this->singer_name,
             'singer_img'=> $this->singer_img,
-            'available_chairs'=> $this->available_chairs,
-            'price_per_person'=> $this->price_per_person
+            'price'=> $this->price,
+            'bookings'=> Booking::with('tables')->where('event_id', $this->id)->get(),
         ];
     }
 }

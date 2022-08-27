@@ -2,26 +2,31 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Event;
+use App\Models\Table;
+use App\Models\Customer;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 
 class Booking extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'party_size',
-        'total_price',
         'event_id',
         'customer_id',
+        'total_price',
         'cancelled_at',
-        'is_message_sent'
+        'is_message_sent',
     ];
 
     public static function booted()
     {
         static::creating(function ($model) {
-            $model->booking_number = mt_rand(111111, 999999);
+            $model->uuid = Str::uuid();
+            $model->token = Str::random(32);
         });
     }
 
@@ -34,4 +39,10 @@ class Booking extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+
+    public function tables()
+    {
+        return $this->belongsToMany(Table::class);
+    }
+
 }

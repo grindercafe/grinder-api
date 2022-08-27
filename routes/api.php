@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\BookingController;
-use App\Http\Controllers\BookingStatusController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\TableController;
+use App\Models\Booking;
+use App\Models\BookingTable;
+use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,9 +46,11 @@ Route::get('/customers/{id}/bookings', [CustomerController::class, 'bookings_by_
 // Route::delete('/status/{id}', [BookingStatusController::class, 'delete']);
 
 Route::get('/bookings', [BookingController::class, 'index']);
-Route::get('/bookings/{id}', [BookingController::class, 'show']);
+Route::get('/bookings/{booking:uuid}', [BookingController::class, 'show']);
 Route::post('/booking', [BookingController::class, 'store']);
 Route::put('/bookings/{id}', [BookingController::class, 'update']);
 Route::delete('/bookings/{id}', [BookingController::class, 'delete']);
 Route::patch('/bookings/{id}/cancel', [BookingController::class, 'cancel']);
 Route::patch('/bookings/{id}/updateMessageStatus', [BookingController::class, 'messageStatus']);
+
+Route::get('/tables', [TableController::class, 'index']);

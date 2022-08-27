@@ -10,7 +10,7 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        return CustomerResource::collection(Customer::all());
+        return CustomerResource::collection(Customer::latest()->get());
     }
 
     public function show($id)

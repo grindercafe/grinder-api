@@ -16,9 +16,7 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('phone_number', 10)->unique();
-            $table->string('token');
-            $table->uuid('uuid');
+            $table->string('phone_number')->unique();
             $table->timestamps();
         });
     }

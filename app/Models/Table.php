@@ -6,17 +6,17 @@ use App\Models\Booking;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Customer extends Model
+class Table extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'phone_number',
+        'number',
+        'capacity'
     ];
 
     public function bookings()
     {
-        return $this->hasMany(Booking::class);
+        return $this->belongsToMany(Booking::class);
     }
 }
