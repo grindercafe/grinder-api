@@ -11,7 +11,7 @@ class EventController extends Controller
 {
     public function index()
     {
-        return EventResource::collection(Event::latest()->get());
+        return EventResource::collection(Event::orderBy('date', 'desc')->get());
     }
     
     public function show($id)
@@ -36,7 +36,8 @@ class EventController extends Controller
             'end_time'=> $request->end_time,
             'singer_name'=> $request->singer_name,
             'singer_img'=> $request->singer_img,
-            'price'=> $request->price
+            'price'=> $request->price,
+            'description'=> $request->description
         ];
         
         $createdEvent = Event::create($event);
