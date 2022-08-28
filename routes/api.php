@@ -4,6 +4,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TableController;
 use App\Models\Booking;
 use App\Models\BookingTable;
@@ -59,3 +60,7 @@ Route::post('/logout', [LoginController::class, 'logout']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/payment', [PaymentController::class, 'createInvoice']);
+
+Route::get('/payment_result', [PaymentController::class, 'payment_result']);
