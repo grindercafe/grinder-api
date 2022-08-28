@@ -11,7 +11,7 @@ class EventController extends Controller
 {
     public function index()
     {
-        return EventResource::collection(Event::orderBy('date', 'desc')->get());
+        return EventResource::collection(Event::orderBy('date')->get());
     }
     
     public function show($id)
