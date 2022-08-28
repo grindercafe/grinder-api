@@ -3,6 +3,7 @@
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TableController;
 use App\Models\Booking;
 use App\Models\BookingTable;
@@ -21,9 +22,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::get('/events',[EventController::class, 'index']);
 Route::get('/events/{id}',[EventController::class, 'show']);
@@ -54,3 +52,10 @@ Route::patch('/bookings/{id}/cancel', [BookingController::class, 'cancel']);
 Route::patch('/bookings/{id}/updateMessageStatus', [BookingController::class, 'messageStatus']);
 
 Route::get('/tables', [TableController::class, 'index']);
+
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout']);
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});

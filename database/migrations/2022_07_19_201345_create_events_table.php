@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('date');
             $table->time('start_time');
             $table->time('end_time');
+            $table->longText('description');
             $table->string('singer_name');
             $table->string('singer_img');
             $table->double('price');

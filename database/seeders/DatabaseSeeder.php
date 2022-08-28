@@ -29,27 +29,31 @@ class DatabaseSeeder extends Seeder
 
         Event::create([
             'date'=> '2022-07-20',
-            'start_time'=> '09:00',
+            'start_time'=> '21:00',
             'end_time'=> '00:00',
-            'singer_name'=> 'name',
+            'description'=> 'وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي',
+            
+            'singer_name'=> 'راشد الفهد',
             'singer_img'=> 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
             'price'=> 150.0,
         ]);
 
         Event::create([
             'date'=> '2022-07-21',
-            'start_time'=> '09:00',
+            'start_time'=> '21:00',
             'end_time'=> '00:00',
-            'singer_name'=> 'name1',
+            'description'=> 'وصف نصي, , وصف نصي',
+            'singer_name'=> 'خالد الماجد',
             'singer_img'=> 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
             'price'=> 200.0,
         ]);
 
         Event::create([
             'date'=> '2022-07-22',
-            'start_time'=> '09:00',
+            'start_time'=> '21:00',
             'end_time'=> '00:00',
-            'singer_name'=> 'name2',
+            'description'=> 'وصف نصي, وصفف , وصف نصي',
+            'singer_name'=> 'رابح عبدالله',
             'singer_img'=> 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
             'price'=> 180.0,
         ]);

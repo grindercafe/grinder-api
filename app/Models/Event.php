@@ -14,6 +14,7 @@ class Event extends Model
         'date',
         'start_time',
         'end_time',
+        'description',
         'singer_name',
         'singer_img',
         'price'
