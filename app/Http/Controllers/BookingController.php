@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\BookingResource;
 use App\Models\Booking;
 use App\Models\Customer;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller 
@@ -45,7 +46,11 @@ class BookingController extends Controller
 
         $createdBooking = Booking::create($booking);
 
-        // $tables = Table::find([1, 2]);
+        Payment::create([
+            'transactionNo'=> $request->transactionNo, 
+            'booking_id'=> $createdBooking->id
+        ]);
+
 
         $createdBooking->tables()->attach($request->tables);
         
@@ -60,6 +65,10 @@ class BookingController extends Controller
     public function delete($id)
     {
         $booking = Booking::findOrFail($id);
+
+        $booking->tables()->detach();
+
+        Payment::where('booking_id', $booking->id)->first()->delete();
 
         $booking->destroy($id);
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use App\Models\User;
 use GuzzleHttp\Client;
 use Illuminate\Support\Str;
@@ -27,7 +28,7 @@ class PaymentController extends Controller
             ]
         );
 
-        $token = $response->getBody()->getContents();
+        $token = $response->getBody();
 
         return json_decode($token)->id_token;
     }
@@ -65,9 +66,22 @@ class PaymentController extends Controller
         return json_decode($response->getBody());
     }
 
+    public function getInvoice(Request $request)
+    {
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('GET', 'https://restpilot.paylink.sa/api/getInvoice/' . $request->trans, [
+            'headers' => [
+                'Accept' => 'application/json;charset=UTF-8',
+                'Authorization' => $request->token,
+            ],
+        ]);
+
+        return json_decode($response->getBody());
+    }
+
     public function payment_result(Request $request)
     {
-        return $request->all();
         $client = new \GuzzleHttp\Client();
 
         $token = $this->getToken();
@@ -81,11 +95,12 @@ class PaymentController extends Controller
 
         $result = json_decode($response->getBody());
 
-        // if ($result->orderStatus === 'Paid') {
-        //     User::create(['username'=> 'mubarak', 'password'=> 'password']);
-        // }
+        $payment = Payment::where('transactionNo', $result->transactionNo)->first();
 
-        // return redirect('localhost:3000');
-        return $result;
+        if($result->orderStatus === 'Paid') {
+            $payment->update(['status'=> 'paid']);
+        } 
+
+        return redirect('http://localhost:3000/events');
     }
 }

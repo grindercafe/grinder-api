@@ -17,6 +17,6 @@ class Table extends Model
 
     public function bookings()
     {
-        return $this->belongsToMany(Booking::class);
+        return $this->belongsToMany(Booking::class)->withTimestamps();;
     }
 }

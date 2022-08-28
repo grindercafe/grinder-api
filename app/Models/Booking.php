@@ -42,7 +42,12 @@ class Booking extends Model
 
     public function tables()
     {
-        return $this->belongsToMany(Table::class);
+        return $this->belongsToMany(Table::class)->withTimestamps();;
+    }
+
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
     }
 
 }

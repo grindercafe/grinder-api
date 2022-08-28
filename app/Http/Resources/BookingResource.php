@@ -5,7 +5,9 @@ namespace App\Http\Resources;
 use App\Models\Booking;
 use App\Models\Customer;
 use App\Models\Event;
+use App\Models\Payment;
 use App\Models\Table;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BookingResource extends JsonResource
@@ -27,7 +29,9 @@ class BookingResource extends JsonResource
             'cancelled_at'=> $this->cancelled_at,
             'token'=> $this->token,
             'uuid'=> $this->uuid,
-            'tables'=> Booking::findOrFail($this->id)->tables
+            'tables'=> Booking::findOrFail($this->id)->tables,
+            'payment'=> Payment::where('booking_id', $this->id)->first(),
+            'created_at'=> $this->created_at
         ];
     }
 }
