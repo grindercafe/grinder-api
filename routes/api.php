@@ -70,7 +70,7 @@ Route::get('/result', [PaymentController::class, 'result']);
 // Route::get('/test', [BookingController::class, 'test']);
 
 Route::post('test_payment', [PaymentController::class, 'createTestInvoice']);
-Route::post('/test_result', [PaymentController::class, 'testResult']);
+Route::get('/test_result', [PaymentController::class, 'testResult']);
 
 Route::get('/test', function () {
     $booking = Booking::first();
