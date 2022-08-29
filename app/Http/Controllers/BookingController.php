@@ -20,13 +20,28 @@ class BookingController extends Controller
         return new BookingResource(Booking::where('uuid', $uuid)->where('token', $request->query('token'))->firstOrFail());
     }
 
-    public function isOverlaps()
+    public function test()
     {
-        return Booking::with(['tables' => function ($q) {
-            $q->where('capacity', 4);
-        }])
-            ->where('event_id', 1)
-            ->get();
+        return Booking::with('tables')->where('event_id', 1)->get();
+    }
+
+    public function isOverlaps($event_id, $tables)
+    {
+        $bookings = Booking::where('event_id', $event_id)->get();
+
+        $overlap = false;
+
+        foreach ($bookings as $booking) {
+            foreach ($booking->tables as $table) {
+                foreach ($tables as $selectedTable) {
+                    if($selectedTable == $table->id) {
+                        $overlap = true;
+                        break 3;
+                    }
+                }
+            }
+        }
+        return $overlap;
     }
 
     public function store(Request $request)
@@ -37,6 +52,12 @@ class BookingController extends Controller
             'customer.name' => 'required|max:255',
             'customer.phone_number' => ['required', 'regex:/^(05)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/']
         ]);
+
+        if($this->isOverlaps($request->event_id, $request->tables)) {
+            return response()->json([
+                'message'=> 'overlapping'
+            ], 400);
+        }
 
         $customer = Customer::where('phone_number', $request->customer['phone_number'])->first();
 

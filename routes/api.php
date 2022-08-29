@@ -65,4 +65,6 @@ Route::post('/payment', [PaymentController::class, 'createInvoice']);
 
 Route::get('/result', [PaymentController::class, 'result']);
 
+Route::get('/test', [BookingController::class, 'test']);
+
 // Route::get('/test', [BookingController::class, 'isOverlaps']);
