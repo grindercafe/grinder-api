@@ -9,6 +9,7 @@ use App\Http\Controllers\TableController;
 use App\Models\Booking;
 use App\Models\BookingTable;
 use App\Models\Event;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -71,4 +72,7 @@ Route::get('/result', [PaymentController::class, 'result']);
 Route::post('test_payment', [PaymentController::class, 'createTestInvoice']);
 Route::get('/test_result', [PaymentController::class, 'testResult']);
 
-// Route::get('/test', [BookingController::class, 'isOverlaps']);
+Route::get('/test', function() {
+    $payment = Payment::where('transactionNo', '1661743897775')->first();
+    return $payment->booking;
+});

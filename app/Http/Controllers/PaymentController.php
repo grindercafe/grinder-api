@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use App\Models\Payment;
 use GuzzleHttp\Client;
 use Illuminate\Support\Str;
@@ -156,6 +157,10 @@ class PaymentController extends Controller
             $payment->update(['status' => 'paid']);
         }
 
-        return redirect('https://grindercafe.net/events');
+        $booking = $payment->booking;
+
+        return redirect()->away(
+            'https://grindercafe.net/bookings/' . $booking->uuid . 
+            '?token=' . $booking->token);
     }
 }
