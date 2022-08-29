@@ -164,7 +164,7 @@ class PaymentController extends Controller
             return redirect()->away($url);
         }
 
-        return redirect()->away('https://grindercafe.net');
+        return redirect()->away('https://grindercafe.net/');
 
     }
 }
