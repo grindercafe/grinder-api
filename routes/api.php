@@ -47,6 +47,7 @@ Route::get('/customers/{id}/bookings', [CustomerController::class, 'bookings_by_
 Route::get('/bookings', [BookingController::class, 'index']);
 Route::get('/bookings/{booking:uuid}', [BookingController::class, 'show']);
 Route::post('/booking', [BookingController::class, 'store']);
+Route::post('/test_booking', [BookingController::class, 'testStore']);
 Route::put('/bookings/{id}', [BookingController::class, 'update']);
 Route::delete('/bookings/{id}', [BookingController::class, 'delete']);
 Route::patch('/bookings/{id}/cancel', [BookingController::class, 'cancel']);

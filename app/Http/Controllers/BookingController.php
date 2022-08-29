@@ -34,7 +34,7 @@ class BookingController extends Controller
         foreach ($bookings as $booking) {
             foreach ($booking->tables as $table) {
                 foreach ($tables as $selectedTable) {
-                    if($selectedTable == $table->id) {
+                    if ($selectedTable == $table->id) {
                         $overlap = true;
                         break 3;
                     }
@@ -42,6 +42,48 @@ class BookingController extends Controller
             }
         }
         return $overlap;
+    }
+
+    public function testStore(Request $request)
+    {
+        $this->validate($request, [
+            'event_id' => 'required',
+            'customer' => 'required|array',
+            'customer.name' => 'required|max:255',
+            'customer.phone_number' => ['required', 'regex:/^(05)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/']
+        ]);
+        
+        $customer = Customer::where('phone_number', $request->customer['phone_number'])->first();
+
+        if (!$customer) {
+            $customer = Customer::create([
+                'name' => $request->customer['name'],
+                'phone_number' => $request->customer['phone_number']
+            ]);
+        }
+
+        $booking = [
+            'total_price' => $request->total_price,
+            "event_id" => $request->event_id,
+            'customer_id' => $customer->id
+        ];
+
+        $createdBooking = Booking::create($booking);
+
+        Payment::create([
+            'transactionNo' => $request->transactionNo,
+            'booking_id' => $createdBooking->id
+        ]);
+
+
+        $createdBooking->tables()->attach($request->tables);
+
+
+        return response()->json([
+            'success' => true,
+            'message' => 'booking created successfully',
+            'data' => $createdBooking
+        ]);
     }
 
     public function store(Request $request)
@@ -53,9 +95,9 @@ class BookingController extends Controller
             'customer.phone_number' => ['required', 'regex:/^(05)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/']
         ]);
 
-        if($this->isOverlaps($request->event_id, $request->tables)) {
+        if ($this->isOverlaps($request->event_id, $request->tables)) {
             return response()->json([
-                'message'=> 'overlapping'
+                'message' => 'overlapping'
             ], 400);
         }
 
