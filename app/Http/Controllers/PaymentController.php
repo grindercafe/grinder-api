@@ -13,14 +13,17 @@ class PaymentController extends Controller
     {
         $client = new Client();
 
+        $body = [
+            'apiId'=> env('PAYMENT_API_ID'),
+            'secretKey'=> env('PAYMENT_SECRET_KEY')
+        ];
+
         $response = $client->request(
             'POST',
             evn('PAYMENT_LINK') . '/api/auth',
             [
-                'body' => '{
-                "apiId":"APP_ID_1123453311","secretKey":"0662abb5-13c7-38ab-cd12-236e58f43766"
-            }',
-                'headers' => [
+                'body'=> json_encode($body),
+                'headers'=> [
                     'Accept' => '*/*',
                     'Content-Type' => 'application/json',
                 ],
