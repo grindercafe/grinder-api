@@ -95,6 +95,6 @@ class PaymentController extends Controller
             $payment->update(['status'=> 'paid']);
         } 
 
-        return redirect('http://localhost:3000/events');
+        return redirect(env('REDIRECT_URL'));
     }
 }
