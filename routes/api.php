@@ -70,7 +70,7 @@ Route::get('/result', [PaymentController::class, 'result']);
 // Route::get('/test', [BookingController::class, 'test']);
 
 Route::post('test_payment', [PaymentController::class, 'createTestInvoice']);
-Route::get('/test_result', [PaymentController::class, 'testResult']);
+Route::post('/test_result', [PaymentController::class, 'testResult']);
 
 Route::get('/test', function() {
     $payment = Payment::where('transactionNo', '1661743897775')->first();
