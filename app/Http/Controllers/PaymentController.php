@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
-use App\Models\User;
 use GuzzleHttp\Client;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -16,7 +15,7 @@ class PaymentController extends Controller
 
         $response = $client->request(
             'POST',
-            'https://restpilot.paylink.sa/api/auth',
+            evn('PAYMENT_LINK') . '/api/auth',
             [
                 'body' => '{
                 "apiId":"APP_ID_1123453311","secretKey":"0662abb5-13c7-38ab-cd12-236e58f43766"
@@ -37,7 +36,7 @@ class PaymentController extends Controller
     {
         $body = [
             'amount' => $request->amount,
-            "callBackUrl" => "http://localhost:8000/api/payment_result",
+            "callBackUrl" => env('PAYMENT_CALLBACK_URL'),
             // "clientEmail" => "myclient@email.com",
             "clientMobile" => $request->phone_number,
             "clientName" => $request->name,
@@ -47,7 +46,7 @@ class PaymentController extends Controller
         $client = new \GuzzleHttp\Client();
         $token = $this->getToken();
 
-        $response = $client->request('POST', 'https://restpilot.paylink.sa/api/addInvoice', [
+        $response = $client->request('POST', env('PAYMENT_LINK') . '/api/addInvoice', [
             'body' => json_encode($body),
             // 'body' => '{
             //     "amount":200,
@@ -70,7 +69,7 @@ class PaymentController extends Controller
     {
         $client = new \GuzzleHttp\Client();
 
-        $response = $client->request('GET', 'https://restpilot.paylink.sa/api/getInvoice/' . $request->trans, [
+        $response = $client->request('GET', env('PAYMENT_LINK') . '/api/getInvoice/' . $request->trans, [
             'headers' => [
                 'Accept' => 'application/json;charset=UTF-8',
                 'Authorization' => $request->token,
@@ -86,7 +85,7 @@ class PaymentController extends Controller
 
         $token = $this->getToken();
 
-        $response = $client->request('GET', 'https://restpilot.paylink.sa/api/getInvoice/' . $request->transactionNo, [
+        $response = $client->request('GET', env('PAYMENT_LINK') . '/api/getInvoice/' . $request->transactionNo, [
             'headers' => [
                 'Accept' => 'application/json;charset=UTF-8',
                 'Authorization' => $token,
