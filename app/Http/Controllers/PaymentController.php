@@ -115,7 +115,7 @@ class PaymentController extends Controller
     {
         $body = [
             'amount' => $request->amount,
-            "callBackUrl" => 'https://api.grindercafe.net/api/test_result',
+            "callBackUrl" => 'https://grindercafe.net/api/test_result',
             "clientMobile" => $request->phone_number,
             "clientName" => $request->name,
             "orderNumber" => $request->name . Str::uuid()
@@ -136,7 +136,7 @@ class PaymentController extends Controller
         return json_decode($response->getBody());
     }
 
-    public function testReuslt(Request $request)
+    public function testResult(Request $request)
     {
         $client = new \GuzzleHttp\Client();
 
@@ -155,15 +155,16 @@ class PaymentController extends Controller
 
         if ($result->orderStatus === 'Paid') {
             $payment->update(['status' => 'paid']);
+
+            $booking = $payment->booking;
+    
+            $url = 'https://grindercafe.net/bookings/' . $booking->uuid . 
+            '?token=' . $booking->token; 
+    
+            return redirect()->away($url);
         }
 
-        $booking = $payment->booking;
+        return redirect()->away('https://grindercafe.net');
 
-        $url = 'https://grindercafe.net/bookings/' . $booking->uuid . 
-        '?token=' . $booking->token;
-
-        return $url;
-
-        // return redirect()->away($url);
     }
 }

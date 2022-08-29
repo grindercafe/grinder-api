@@ -71,12 +71,3 @@ Route::get('/result', [PaymentController::class, 'result']);
 
 Route::post('test_payment', [PaymentController::class, 'createTestInvoice']);
 Route::get('/test_result', [PaymentController::class, 'testResult']);
-
-Route::get('/test', function () {
-    $booking = Booking::first();
-
-    // return 'localhost:3000/bookings/' . $booking->uuid . 
-    // '?token=' . $booking->token;
-    return redirect()->away('http://localhost:3000/bookings/' . $booking->uuid . 
-    '?token=' . $booking->token);
-});
