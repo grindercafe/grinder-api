@@ -20,7 +20,7 @@ class PaymentController extends Controller
 
         $response = $client->request(
             'POST',
-            evn('PAYMENT_LINK') . '/api/auth',
+            env('PAYMENT_LINK') . '/api/auth',
             [
                 'body'=> json_encode($body),
                 'headers'=> [
@@ -40,7 +40,6 @@ class PaymentController extends Controller
         $body = [
             'amount' => $request->amount,
             "callBackUrl" => env('PAYMENT_CALLBACK_URL'),
-            // "clientEmail" => "myclient@email.com",
             "clientMobile" => $request->phone_number,
             "clientName" => $request->name,
             "orderNumber" => $request->name . Str::uuid()
@@ -51,13 +50,6 @@ class PaymentController extends Controller
 
         $response = $client->request('POST', env('PAYMENT_LINK') . '/api/addInvoice', [
             'body' => json_encode($body),
-            // 'body' => '{
-            //     "amount":200,
-            //     "callBackUrl":"https://www.example.com",
-            //     "clientEmail":"myclient@email.com",
-            //     "clientMobile":"0509200900",
-            //     "clientName":"Zaid Matooq","orderNumber":"MERCHANT-ANY-UNIQUE-ORDER-NUMBER-123123123"
-            // }',
             'headers' => [
                 'Accept' => 'application/json;charset=UTF-8',
                 'Authorization' => 'Bearer ' . $token,
@@ -82,7 +74,7 @@ class PaymentController extends Controller
         return json_decode($response->getBody());
     }
 
-    public function payment_result(Request $request)
+    public function result(Request $request)
     {
         $client = new \GuzzleHttp\Client();
 
