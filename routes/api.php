@@ -25,11 +25,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/events',[EventController::class, 'index']);
-Route::get('/events/{id}',[EventController::class, 'show']);
-Route::post('/event',[EventController::class, 'store']);
+Route::get('/events', [EventController::class, 'index']);
+Route::get('/events/{id}', [EventController::class, 'show']);
+Route::post('/event', [EventController::class, 'store']);
 Route::put('/events/{id}', [EventController::class, 'update']);
-Route::delete('/events/{id}',[EventController::class, 'delete']);
+Route::delete('/events/{id}', [EventController::class, 'delete']);
 Route::get('/events/{id}/bookings', [EventController::class, 'bookings_by_event']);
 
 Route::get('/customers', [CustomerController::class, 'index']);
@@ -72,7 +72,11 @@ Route::get('/result', [PaymentController::class, 'result']);
 Route::post('test_payment', [PaymentController::class, 'createTestInvoice']);
 Route::post('/test_result', [PaymentController::class, 'testResult']);
 
-Route::get('/test', function() {
-    $payment = Payment::where('transactionNo', '1661743897775')->first();
-    return $payment->booking;
+Route::get('/test', function () {
+    $booking = Booking::first();
+
+    // return 'localhost:3000/bookings/' . $booking->uuid . 
+    // '?token=' . $booking->token;
+    return redirect()->away('http://localhost:3000/bookings/' . $booking->uuid . 
+    '?token=' . $booking->token);
 });

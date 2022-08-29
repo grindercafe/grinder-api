@@ -159,8 +159,11 @@ class PaymentController extends Controller
 
         $booking = $payment->booking;
 
-        return redirect()->away(
-            'https://grindercafe.net/bookings/' . $booking->uuid . 
-            '?token=' . $booking->token);
+        $url = 'https://grindercafe.net/bookings/' . $booking->uuid . 
+        '?token=' . $booking->token;
+
+        return $url;
+
+        // return redirect()->away($url);
     }
 }
