@@ -115,7 +115,7 @@ class PaymentController extends Controller
     {
         $body = [
             'amount' => $request->amount,
-            "callBackUrl" => 'https://grindercafe.net/api/test_result',
+            "callBackUrl" => 'https://api.grindercafe.net/api/test_result',
             "clientMobile" => $request->phone_number,
             "clientName" => $request->name,
             "orderNumber" => $request->name . Str::uuid()
