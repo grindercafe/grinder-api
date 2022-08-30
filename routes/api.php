@@ -1,17 +1,18 @@
 <?php
 
-use App\Http\Controllers\BookingController;
-use App\Http\Controllers\CustomerController;
+use App\Models\Event;
+use App\Models\Booking;
+use App\Models\Payment;
+use App\Models\BookingTable;
+use Illuminate\Http\Request;
+use App\Http\Resources\EventResource;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TableController;
-use App\Models\Booking;
-use App\Models\BookingTable;
-use App\Models\Event;
-use App\Models\Payment;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/events', [EventController::class, 'index']);
+Route::get('/visible_events', [EventController::class, 'visible_events']);
 Route::get('/events/{id}', [EventController::class, 'show']);
 Route::post('/event', [EventController::class, 'store']);
 Route::put('/events/{id}', [EventController::class, 'update']);
@@ -68,9 +70,9 @@ Route::post('/payment', [PaymentController::class, 'createInvoice']);
 Route::get('/result', [PaymentController::class, 'result']);
 Route::get('/update_payment_status', [PaymentController::class, 'updatePaymentStatus']);
 
-Route::get('/test',  function() {
-    return Event::find(1)->unavailableTables;
-});
+// Route::get('/test',  function() {
+//     return EventResource::collection(Event::orderBy('date')->where('is_visible', true)->get());
+// });
 
 // Route::post('test_payment', [PaymentController::class, 'createTestInvoice']);
 // Route::get('/test_result', [PaymentController::class, 'testResult']);

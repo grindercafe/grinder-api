@@ -75,12 +75,17 @@ class EventController extends Controller
         ]);
     }
 
+    public function visible_events()
+    {
+        return EventResource::collection(Event::orderBy('date')->where('is_visible', true)->get());
+    }
+
     public function update_is_visible($id)
     {
         $event = Event::find($id);
 
         $event->update(['is_visible'=> !$event->is_visible]);
-        
+
         return response()->json([
             'success'=> true,
             'message'=> 'event visibility updated successfully',
