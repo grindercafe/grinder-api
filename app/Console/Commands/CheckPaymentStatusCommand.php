@@ -29,11 +29,11 @@ class CheckPaymentStatusCommand extends Command
     public function handle()
     {
         $payments = Payment::where('status', 'pending')
-        ->where('created_at', '<', now()->subMinutes(10)->toDateString())->get();
+        ->where('created_at', '<=', now()->subMinutes(10))->get();
 
         foreach ($payments as $payment) {
-            $payment->booking->tables()->detach();
             $payment->update(['status'=> 'timeout']);
+            $payment->booking->tables()->detach();
         }
 
         $this->info('successful detach');
