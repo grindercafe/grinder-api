@@ -16,12 +16,14 @@ class CustomerResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'=> $this->id,
-            'name'=> $this->name,
-            'phone_number'=> $this->phone_number,
-            'token'=> $this->token,
-            'uuid'=> $this->uuid,
-            'num_of_bookings'=> Booking::where('customer_id', $this->id)->count()
+            'id' => $this->id,
+            'name' => $this->name,
+            'phone_number' => $this->phone_number,
+            'token' => $this->token,
+            'uuid' => $this->uuid,
+            'num_of_bookings' => Booking::whereHas('payment', function ($q) {
+                $q->where('status', 'paid');
+            })->where('customer_id', $this->id)->count()
         ];
     }
 }
