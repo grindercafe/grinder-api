@@ -70,3 +70,4 @@ Route::get('/result', [PaymentController::class, 'result']);
 
 // Route::post('test_payment', [PaymentController::class, 'createTestInvoice']);
 // Route::get('/test_result', [PaymentController::class, 'testResult']);
+
