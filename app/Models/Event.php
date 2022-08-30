@@ -17,7 +17,8 @@ class Event extends Model
         'description',
         'singer_name',
         'singer_img',
-        'price'
+        'price',
+        'is_visible'
     ];
 
     protected $casts = [
@@ -29,5 +30,10 @@ class Event extends Model
     public function bookings()
     {
         return $this->hasMany(Booking::class);
+    }
+
+    public function unavailableTables()
+    {
+        return $this->belongsToMany(Table::class, 'unavailable_tables', 'event_id', 'table_id')->withTimestamps();
     }
 }

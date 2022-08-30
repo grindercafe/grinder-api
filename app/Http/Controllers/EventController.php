@@ -75,6 +75,19 @@ class EventController extends Controller
         ]);
     }
 
+    public function update_is_visible($id)
+    {
+        $event = Event::find($id);
+
+        $event->update(['is_visible'=> !$event->is_visible]);
+        
+        return response()->json([
+            'success'=> true,
+            'message'=> 'event visibility updated successfully',
+            'data'=> $event
+        ]);
+    }
+
     public function bookings_by_event($event_id)
     {
         return Booking::where('event_id', $event_id)->count();

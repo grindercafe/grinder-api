@@ -31,6 +31,7 @@ Route::post('/event', [EventController::class, 'store']);
 Route::put('/events/{id}', [EventController::class, 'update']);
 Route::delete('/events/{id}', [EventController::class, 'delete']);
 Route::get('/events/{id}/bookings', [EventController::class, 'bookings_by_event']);
+Route::patch('/events/{id}/update_visibility', [EventController::class, 'update_is_visible']);
 
 Route::get('/customers', [CustomerController::class, 'index']);
 Route::get('/customers/{id}', [CustomerController::class, 'show']);
@@ -68,9 +69,7 @@ Route::get('/result', [PaymentController::class, 'result']);
 Route::get('/update_payment_status', [PaymentController::class, 'updatePaymentStatus']);
 
 Route::get('/test',  function() {
-    return Booking::whereHas('payment', function($q) {
-        $q->where('status', 'timeout');
-    })->count();
+    return Event::find(1)->unavailableTables;
 });
 
 // Route::post('test_payment', [PaymentController::class, 'createTestInvoice']);

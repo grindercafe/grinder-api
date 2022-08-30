@@ -25,6 +25,8 @@ class EventResource extends JsonResource
             'price'=> $this->price,
             'description'=> $this->description,
             'bookings'=> Booking::with('tables')->where('event_id', $this->id)->get(),
+            'unavailableTables'=> $this->unavailableTables,
+            'is_visible'=> $this->is_visible
         ];
     }
 }
