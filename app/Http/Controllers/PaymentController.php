@@ -102,6 +102,23 @@ class PaymentController extends Controller
         return redirect()->away('https://grindercafe.net/');
     }
 
+    public function updatePaymentStatus()
+    {
+        $payments = Payment::where('status', 'pending')
+        ->where('created_at', '<=', now()->subMinutes(2))
+        ->get();
+
+        foreach ($payments as $payment) {
+            $payment->update(['status'=> 'timeout']);
+            $payment->booking->tables()->detach();
+        }
+
+        return response()->json([
+            'success'=> true,
+            'message'=> 'update payment status and detach tables booking successfully'
+        ]);
+    }
+
     // public function getTestToken()
     // {
     //     $client = new Client();
