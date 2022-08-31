@@ -17,9 +17,9 @@ class BookingController extends Controller
         return BookingResource::collection(
             Booking::whereIn('event_id', $ids)
             ->latest()
-            ->whereHas('payment', function($q) {
-                $q->where('status', '<>', 'timeout');
-            })
+            // ->whereHas('payment', function($q) {
+            //     $q->where('status', '<>', 'timeout');
+            // })
             ->get()
         );
         // return BookingResource::collection(Booking::latest()->whereHas('payment', function($q) {
