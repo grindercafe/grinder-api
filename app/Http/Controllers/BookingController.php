@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\BookingResource;
+use App\Models\Event;
 use App\Models\Booking;
-use App\Models\Customer;
 use App\Models\Payment;
+use App\Models\Customer;
 use Illuminate\Http\Request;
+use App\Http\Resources\BookingResource;
 
 class BookingController extends Controller
 {
