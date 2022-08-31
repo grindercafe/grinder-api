@@ -12,7 +12,11 @@ class BookingController extends Controller
 {
     public function index()
     {
-        return BookingResource::collection(Booking::latest()->get());
+        $ids = Event::where('date', '>=', now()->toDateString())->pluck('id');
+        return BookingResource::collection(
+            Booking::whereIn('event_id', $ids)->latest()->get()
+        );
+        // return BookingResource::collection(Booking::latest()->get());
     }
 
     public function show($uuid, Request $request)
