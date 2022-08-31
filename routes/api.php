@@ -29,6 +29,7 @@ use App\Http\Controllers\CustomerController;
 Route::get('/events', [EventController::class, 'index']);
 Route::get('/visible_events', [EventController::class, 'visible_events']);
 Route::get('/events/{id}', [EventController::class, 'show']);
+Route::get('/visible_events/{id}', [EventController::class, 'visible_event']);
 Route::post('/event', [EventController::class, 'store']);
 Route::put('/events/{id}', [EventController::class, 'update']);
 Route::delete('/events/{id}', [EventController::class, 'delete']);

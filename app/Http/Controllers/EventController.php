@@ -13,10 +13,20 @@ class EventController extends Controller
     {
         return EventResource::collection(Event::orderBy('date')->get());
     }
-    
-    public function show($id)
+
+    public function visible_events()
+    {
+        return EventResource::collection(Event::orderBy('date')->where('is_visible', true)->get());
+    }
+
+    public function visible_event($id)
     {
         return new EventResource(Event::where('is_visible', true)->where('id', $id)->firstOrFail());
+    }
+
+    public function show($id)
+    {
+        return new EventResource(Event::findOrFail($id));
     }
 
     public function store(Request $request)
@@ -73,11 +83,6 @@ class EventController extends Controller
             'message'=> 'event deleted successfully',
             'data'=> $event
         ]);
-    }
-
-    public function visible_events()
-    {
-        return EventResource::collection(Event::orderBy('date')->where('is_visible', true)->get());
     }
 
     public function update_is_visible($id)
