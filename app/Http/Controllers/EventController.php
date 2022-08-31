@@ -16,7 +16,7 @@ class EventController extends Controller
     
     public function show($id)
     {
-        return new EventResource(Event::findOrFail($id));
+        return new EventResource(Event::where('is_visible', true)->where('id', $id)->firstOrFail());
     }
 
     public function store(Request $request)
