@@ -15,9 +15,16 @@ class BookingController extends Controller
     {
         $ids = Event::where('date', '>=', now()->toDateString())->pluck('id');
         return BookingResource::collection(
-            Booking::whereIn('event_id', $ids)->latest()->get()
+            Booking::whereIn('event_id', $ids)
+            ->latest()
+            ->whereHas('payment', function($q) {
+                $q->where('status', '<>', 'timeout');
+            })
+            ->get()
         );
-        // return BookingResource::collection(Booking::latest()->get());
+        // return BookingResource::collection(Booking::latest()->whereHas('payment', function($q) {
+        //     $q->where('status', '<>', 'timeout');
+        // })->get());
     }
 
     public function show($uuid, Request $request)
