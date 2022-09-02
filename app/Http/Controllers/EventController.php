@@ -98,6 +98,22 @@ class EventController extends Controller
         ]);
     }
 
+    public function hide_tables($id, Request $request)
+    {
+        $event = Event::findOrFail($id);
+        
+        $event->unavailableTables()->attach($request->ids);
+
+        $event->unavailableTables()->detach($request->removed_ids);
+
+        // foreach ($request->ids as $table_id) {
+        //     foreach($event->unavailableTables as $unavailableTable) {
+        //         if($table_id != )
+        //     }
+        // }
+        // $event->unavailableTables()->attach($request->ids);
+    }
+
     public function bookings_by_event($event_id)
     {
         return Booking::where('event_id', $event_id)->count();
