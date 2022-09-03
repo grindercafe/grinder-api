@@ -13,10 +13,10 @@ class BookingController extends Controller
 {
     public function index()
     {
-        $ids = Event::where('date', '>=', now()->toDateString())->pluck('id');
+        // $ids = Event::where('date', '>=', now()->toDateString())->pluck('id');
         return BookingResource::collection(
-            Booking::whereIn('event_id', $ids)
-            ->latest()
+            // Booking::whereIn('event_id', $ids)
+            Booking::latest()
             // ->whereHas('payment', function($q) {
             //     $q->where('status', '<>', 'timeout');
             // })
