@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Event;
 use App\Models\Booking;
 use App\Models\Payment;
 use App\Models\Customer;
@@ -13,15 +12,30 @@ class BookingController extends Controller
 {
     public function index()
     {
-        // $ids = Event::where('date', '>=', now()->toDateString())->pluck('id');
         return BookingResource::collection(
-            // Booking::whereIn('event_id', $ids)
-            Booking::latest()
-            // ->whereHas('payment', function($q) {
-            //     $q->where('status', '<>', 'timeout');
-            // })
-            ->get()
+            Booking::where(function($query) {
+                $query->where('id', 'LIKE', '%' . request('search') . '%')
+                ->orWhereHas('customer', function($query) {
+                    $query->where('phone_number', 'LIKE', '%' . request('search') . '%');
+                })->orWhereHas('event', function($query) {
+                    $query->where('singer_name', 'LIKE', '%' . request('search') . '%');
+                });
+            })->latest()->paginate(10)
         );
+        // $ids = Event::where('date', '>=', now()->toDateString())->pluck('id');
+        // return BookingResource::collection(
+        //     // Booking::whereIn('event_id', $ids)
+        //     Booking::where('id', 'LIKE', '%' . request('search') . '%')
+        //         ->orWhereHas('customer', function ($q) {
+        //             $q->where('name', 'LIKE', '%' . request('search') . '%');
+        //         })
+        //         // })
+        //         // ->where('id', 'LIKE',)
+        //         // ->whereHas('payment', function($q) {
+        //         //     $q->where('status', '<>', 'timeout');
+        //         // })
+        //         ->paginate(3)
+        // );
         // return BookingResource::collection(Booking::latest()->whereHas('payment', function($q) {
         //     $q->where('status', '<>', 'timeout');
         // })->get());

@@ -10,7 +10,14 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        return CustomerResource::collection(Customer::latest()->get());
+        return CustomerResource::collection(
+            Customer::where(function($query) {
+                $query->where('name', 'LIKE', '%' . request('search') . '%')
+                ->orWhere('phone_number', 'LIKE', '%' . request('search') . '%');
+            })
+            ->latest()
+            ->paginate(10)
+        );
     }
 
     public function show($id)

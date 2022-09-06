@@ -11,7 +11,13 @@ class EventController extends Controller
 {
     public function index()
     {
-        return EventResource::collection(Event::orderBy('date')->get());
+        return EventResource::collection(
+            Event::where(function($query) {
+                $query->where('singer_name', 'like', '%' . request('search') . '%');
+            })
+            ->orderBy('date', 'desc')
+            ->paginate(10)
+        );
     }
 
     public function visible_events()
