@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Booking>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Customer>
  */
-class BookingFactory extends Factory
+class CustomerFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,8 @@ class BookingFactory extends Factory
     public function definition()
     {
         return [
-            'event_id'=> fake()->numberBetween(1, 200),
-            'customer_id'=> fake()->numberBetween(1, 300),
-            'total_price'=> 600.0
+            'name'=> fake()->name(),
+            'phone_number'=> '053' . fake()->numberBetween(1234567, 9999999)
         ];
     }
 }

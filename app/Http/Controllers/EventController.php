@@ -13,7 +13,8 @@ class EventController extends Controller
     {
         return EventResource::collection(
             Event::where(function($query) {
-                $query->where('singer_name', 'like', '%' . request('search') . '%');
+                $query->where('id', 'like', request('search') . '%')
+                ->orWhere('singer_name', 'like', '%' . request('search') . '%');
             })
             ->orderBy('date', 'desc')
             ->paginate(10)

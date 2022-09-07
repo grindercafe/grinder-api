@@ -14,7 +14,7 @@ class BookingController extends Controller
     {
         return BookingResource::collection(
             Booking::where(function($query) {
-                $query->where('id', 'LIKE', '%' . request('search') . '%')
+                $query->where('id', 'LIKE', request('search') . '%')
                 ->orWhereHas('customer', function($query) {
                     $query->where('phone_number', 'LIKE', '%' . request('search') . '%');
                 })->orWhereHas('event', function($query) {

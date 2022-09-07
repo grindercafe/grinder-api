@@ -27,51 +27,51 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Event::create([
-            'date'=> '2022-07-20',
-            'start_time'=> '21:00',
-            'end_time'=> '00:00',
-            'description'=> 'وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي',
+        // Event::create([
+        //     'date'=> '2022-07-20',
+        //     'start_time'=> '21:00',
+        //     'end_time'=> '00:00',
+        //     'description'=> 'وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي وصف نصي',
             
-            'singer_name'=> 'راشد الفهد',
-            'singer_img'=> 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
-            'price'=> 150.0,
-        ]);
+        //     'singer_name'=> 'راشد الفهد',
+        //     'singer_img'=> 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+        //     'price'=> 150.0,
+        // ]);
 
-        Event::create([
-            'date'=> '2022-07-21',
-            'start_time'=> '21:00',
-            'end_time'=> '00:00',
-            'description'=> 'وصف نصي, , وصف نصي',
-            'singer_name'=> 'خالد الماجد',
-            'singer_img'=> 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
-            'price'=> 200.0,
-        ]);
+        // Event::create([
+        //     'date'=> '2022-07-21',
+        //     'start_time'=> '21:00',
+        //     'end_time'=> '00:00',
+        //     'description'=> 'وصف نصي, , وصف نصي',
+        //     'singer_name'=> 'خالد الماجد',
+        //     'singer_img'=> 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+        //     'price'=> 200.0,
+        // ]);
 
-        Event::create([
-            'date'=> '2022-07-22',
-            'start_time'=> '21:00',
-            'end_time'=> '00:00',
-            'description'=> 'وصف نصي, وصفف , وصف نصي',
-            'singer_name'=> 'رابح عبدالله',
-            'singer_img'=> 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
-            'price'=> 180.0,
-        ]);
+        // Event::create([
+        //     'date'=> '2022-07-22',
+        //     'start_time'=> '21:00',
+        //     'end_time'=> '00:00',
+        //     'description'=> 'وصف نصي, وصفف , وصف نصي',
+        //     'singer_name'=> 'رابح عبدالله',
+        //     'singer_img'=> 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+        //     'price'=> 180.0,
+        // ]);
 
-        Customer::create([
-            'name'=> 'mubarak',
-            'phone_number'=> '0500000000'
-        ]);
+        // Customer::create([
+        //     'name'=> 'mubarak',
+        //     'phone_number'=> '0500000000'
+        // ]);
 
-        Customer::create([
-            'name'=> 'ahmed',
-            'phone_number'=> '0500000001'
-        ]);
+        // Customer::create([
+        //     'name'=> 'ahmed',
+        //     'phone_number'=> '0500000001'
+        // ]);
 
-        Customer::create([
-            'name'=> 'sohad',
-            'phone_number'=> '0500000002'
-        ]);
+        // Customer::create([
+        //     'name'=> 'sohad',
+        //     'phone_number'=> '0500000002'
+        // ]);
 
         Table::create(['number'=> 34, 'capacity'=> 4]);
         Table::create(['number'=> 33, 'capacity'=> 3]);
@@ -118,8 +118,10 @@ class DatabaseSeeder extends Seeder
         Table::create(['number'=> 1, 'capacity'=> 4]);
         Table::create(['number'=> 2, 'capacity'=> 4]);
         Table::create(['number'=> 3, 'capacity'=> 4]);
-        
-        // Booking::factory(20)->create();
+        Customer::factory(300)->create();
+        Event::factory(200)->create();
+        Booking::factory(400)->create();
+
 
     }
 }
