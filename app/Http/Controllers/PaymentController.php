@@ -105,7 +105,7 @@ class PaymentController extends Controller
     public function updatePaymentStatus()
     {
         $payments = Payment::where('status', 'pending')
-        ->where('created_at', '<=', now()->subMinutes(5))
+        ->where('created_at', '<=', now()->subMinutes(10))
         ->get();
 
         foreach ($payments as $payment) {

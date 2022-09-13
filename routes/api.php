@@ -73,9 +73,5 @@ Route::post('/payment', [PaymentController::class, 'createInvoice']);
 Route::get('/result', [PaymentController::class, 'result']);
 Route::get('/update_payment_status', [PaymentController::class, 'updatePaymentStatus']);
 
-// Route::get('/test',  function() {
-//     return Table::all();
-// });
-
 // Route::post('test_payment', [PaymentController::class, 'createTestInvoice']);
 // Route::get('/test_result', [PaymentController::class, 'testResult']);
