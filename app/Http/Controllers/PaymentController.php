@@ -115,6 +115,7 @@ class PaymentController extends Controller
 
         foreach ($payments as $payment) {
             $payment->update(['status'=> 'timeout']);
+            $payment->booking->update(['total_price'=> 0]);
             $payment->booking->tables()->detach();
         }
 
