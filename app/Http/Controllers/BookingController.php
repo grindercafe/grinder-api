@@ -71,7 +71,6 @@ class BookingController extends Controller
                         $overlap = true;
                         break 3;
                     }
-                        
                 }
             }
         }
@@ -90,7 +89,7 @@ class BookingController extends Controller
         if ($this->isOverlaps($request->event_id, $request->tables)) {
             return response()->json([
                 'message' => 'overlapping'
-            ], 400);
+            ], 500);
         }
 
         $customer = Customer::where('phone_number', $request->customer['phone_number'])->first();
@@ -146,9 +145,9 @@ class BookingController extends Controller
     public function updatePaymentStatus(Request $request, $id)
     {
         $booking = Booking::findOrFail($id);
-        
-        if($request->paymentStatus)
-            $booking->payment->update(['status'=> $request->paymentStatus]);
+
+        if ($request->paymentStatus)
+            $booking->payment->update(['status' => $request->paymentStatus]);
 
         return response()->json([
             'success' => true,
@@ -168,7 +167,7 @@ class BookingController extends Controller
             if ($this->overlappedTables($targetEvent, $currentTables)) {
                 return response()->json([
                     'message' => 'overlapping',
-                    'tables'=> $this->overlappedTables($targetEvent, $currentTables)
+                    'tables' => $this->overlappedTables($targetEvent, $currentTables)
                 ], 500);
             }
 
@@ -185,7 +184,14 @@ class BookingController extends Controller
     {
         $booking = Booking::findOrFail($id);
         $selectedTables = Table::whereIn('id', $request->ids)->get();
+        $selectedTablesIds = Table::whereIn('id', $request->ids)->pluck('id');
         $removedTables = Table::whereIn('id', $request->removed_ids)->get();
+
+        if ($this->isOverlaps($booking->event->id, $selectedTablesIds)) {
+            return response()->json([
+                'message' => 'overlapping'
+            ], 500);
+        }
 
         $event = $booking->event;
 
@@ -199,7 +205,7 @@ class BookingController extends Controller
             $total_price = $total_price - ($event->price * $table->capacity);
         }
 
-        $booking->update(['total_price'=> $total_price]);
+        $booking->update(['total_price' => $total_price]);
         $booking->tables()->detach($request->removed_ids);
         $booking->tables()->attach($request->ids);
 
@@ -217,7 +223,7 @@ class BookingController extends Controller
 
         $booking->tables()->detach();
 
-        if($booking->payment)
+        if ($booking->payment)
             $booking->payment->delete();
 
         $booking->destroy($id);

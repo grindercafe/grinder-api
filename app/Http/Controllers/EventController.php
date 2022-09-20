@@ -112,9 +112,34 @@ class EventController extends Controller
         ]);
     }
 
+    public function isOverlaps($event_id, $tables)
+    {
+        $bookings = Booking::where('event_id', $event_id)->get();
+
+        $overlap = false;
+
+        foreach ($bookings as $booking) {
+            foreach ($booking->tables as $table) {
+                foreach ($tables as $selectedTable) {
+                    if ($selectedTable == $table->id) {
+                        $overlap = true;
+                        break 3;
+                    }
+                }
+            }
+        }
+        return $overlap;
+    }
+
     public function hide_tables($id, Request $request)
     {
         $event = Event::findOrFail($id);
+
+        if ($this->isOverlaps($event->id, $request->ids)) {
+            return response()->json([
+                'message' => 'overlapping'
+            ], 500);
+        }
         
         $event->unavailableTables()->attach($request->ids);
 
