@@ -7,19 +7,21 @@ use App\Models\Payment;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Resources\BookingResource;
+use App\Models\Event;
+use App\Models\Table;
 
 class BookingController extends Controller
 {
     public function index()
     {
         return BookingResource::collection(
-            Booking::where(function($query) {
+            Booking::where(function ($query) {
                 $query->where('id', 'LIKE', request('search') . '%')
-                ->orWhereHas('customer', function($query) {
-                    $query->where('phone_number', 'LIKE', '%' . request('search') . '%');
-                })->orWhereHas('event', function($query) {
-                    $query->where('singer_name', 'LIKE', '%' . request('search') . '%');
-                });
+                    ->orWhereHas('customer', function ($query) {
+                        $query->where('phone_number', 'LIKE', '%' . request('search') . '%');
+                    })->orWhereHas('event', function ($query) {
+                        $query->where('singer_name', 'LIKE', '%' . request('search') . '%');
+                    });
             })->latest()->paginate(10)
         );
         // $ids = Event::where('date', '>=', now()->toDateString())->pluck('id');
@@ -46,6 +48,11 @@ class BookingController extends Controller
         return new BookingResource(Booking::where('uuid', $uuid)->where('token', $request->query('token'))->firstOrFail());
     }
 
+    public function showInDashboard($id)
+    {
+        return new BookingResource(Booking::findOrFail($id));
+    }
+
     public function test()
     {
         return Booking::with('tables')->where('event_id', 1)->get();
@@ -64,6 +71,7 @@ class BookingController extends Controller
                         $overlap = true;
                         break 3;
                     }
+                        
                 }
             }
         }
@@ -118,13 +126,99 @@ class BookingController extends Controller
         ]);
     }
 
+    public function overlappedTables($targetEvent, $currentTables)
+    {
+        $overlappedTables = [];
+
+        foreach ($targetEvent->bookings as $singleBooking) {
+            foreach ($singleBooking->tables as $singleTable) {
+                foreach ($currentTables as $table) {
+                    if ($table->id == $singleTable->id) {
+                        array_push($overlappedTables, $table->number);
+                    }
+                }
+            }
+        }
+
+        return $overlappedTables;
+    }
+
+    public function updatePaymentStatus(Request $request, $id)
+    {
+        $booking = Booking::findOrFail($id);
+        
+        if($request->paymentStatus)
+            $booking->payment->update(['status'=> $request->paymentStatus]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'booking updated successfully'
+        ]);
+    }
+
+    public function updateRelatedEvent(Request $request, $id)
+    {
+        $booking = Booking::findOrFail($id);
+        $currentTables = $booking->tables;
+        $targetEvent = Event::findOrFail($request->event);
+
+        if ($request->event) {
+            $targetEvent = Event::findOrFail($request->event);
+
+            if ($this->overlappedTables($targetEvent, $currentTables)) {
+                return response()->json([
+                    'message' => 'overlapping',
+                    'tables'=> $this->overlappedTables($targetEvent, $currentTables)
+                ], 500);
+            }
+
+            $booking->update(['event_id' => $request->event]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'booking updated successfully'
+        ]);
+    }
+
+    public function update_tables(Request $request, $id)
+    {
+        $booking = Booking::findOrFail($id);
+        $selectedTables = Table::whereIn('id', $request->ids)->get();
+        $removedTables = Table::whereIn('id', $request->removed_ids)->get();
+
+        $event = $booking->event;
+
+        $total_price = $booking->total_price;
+
+        foreach ($selectedTables as $table) {
+            $total_price = $total_price + ($event->price * $table->capacity);
+        }
+
+        foreach ($removedTables as $table) {
+            $total_price = $total_price - ($event->price * $table->capacity);
+        }
+
+        $booking->update(['total_price'=> $total_price]);
+        $booking->tables()->detach($request->removed_ids);
+        $booking->tables()->attach($request->ids);
+
+
+        return response()->json([
+            'success' => true,
+            'message' => 'booking tables updated successfully',
+            'data' => $booking
+        ]);
+    }
+
     public function delete($id)
     {
         $booking = Booking::findOrFail($id);
 
         $booking->tables()->detach();
 
-        Payment::where('booking_id', $booking->id)->first()->delete();
+        if($booking->payment)
+            $booking->payment->delete();
 
         $booking->destroy($id);
 
@@ -166,12 +260,5 @@ class BookingController extends Controller
     public function bookings_by_event($event_id)
     {
         return Booking::where('event_id', $event_id)->get();
-    }
-
-    public function activate($id)
-    {
-        $booking = Booking::findOrFail($id);
-
-        $booking->update(['cancelled_at' => null]);
     }
 }

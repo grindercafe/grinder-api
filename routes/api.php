@@ -26,16 +26,26 @@ use App\Http\Controllers\CustomerController;
 |
 */
 
-
+// paginated events
 Route::get('/events', [EventController::class, 'index']);
+// visible events only
 Route::get('/visible_events', [EventController::class, 'visible_events']);
+// all events orderd by date
+Route::get('/allEvents', [EventController::class, 'allEvents']);
+
 Route::get('/events/{id}', [EventController::class, 'show']);
 Route::get('/visible_events/{id}', [EventController::class, 'visible_event']);
+
 Route::post('/event', [EventController::class, 'store']);
+
 Route::put('/events/{id}', [EventController::class, 'update']);
+
 Route::delete('/events/{id}', [EventController::class, 'delete']);
+
 Route::get('/events/{id}/bookings', [EventController::class, 'bookings_by_event']);
+
 Route::patch('/events/{id}/update_visibility', [EventController::class, 'update_is_visible']);
+
 Route::post('/events/{id}/hide_tables', [EventController::class, 'hide_tables']);
 
 Route::get('/customers', [CustomerController::class, 'index']);
@@ -53,12 +63,19 @@ Route::get('/customers/{id}/bookings', [CustomerController::class, 'bookings_by_
 
 Route::get('/bookings', [BookingController::class, 'index']);
 Route::get('/bookings/{booking:uuid}', [BookingController::class, 'show']);
+Route::get('/bookings/dashboard/{id}', [BookingController::class, 'showInDashboard']);
 Route::post('/booking', [BookingController::class, 'store']);
 Route::post('/test_booking', [BookingController::class, 'testStore']);
-Route::put('/bookings/{id}', [BookingController::class, 'update']);
+
+Route::put('/update_event_in_booking/{id}', [BookingController::class, 'updateRelatedEvent']);
+Route::put('/update_payment_status_in_booking/{id}', [BookingController::class, 'updatePaymentStatus']);
+
 Route::delete('/bookings/{id}', [BookingController::class, 'delete']);
 Route::patch('/bookings/{id}/cancel', [BookingController::class, 'cancel']);
 Route::patch('/bookings/{id}/updateMessageStatus', [BookingController::class, 'messageStatus']);
+
+Route::put('/bookings/{id}/updateTables', [BookingController::class, 'update_tables']);
+
 
 Route::get('/tables', [TableController::class, 'index']);
 

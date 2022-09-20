@@ -26,6 +26,13 @@ class EventController extends Controller
         return EventResource::collection(Event::orderBy('date')->where('is_visible', true)->get());
     }
 
+    public function allEvents()
+    {
+        return EventResource::collection(
+            Event::orderBy('date', 'desc')->get()
+        );
+    }
+
     public function visible_event($id)
     {
         return new EventResource(Event::where('is_visible', true)->where('id', $id)->firstOrFail());

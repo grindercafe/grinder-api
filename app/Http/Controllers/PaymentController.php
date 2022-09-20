@@ -89,13 +89,18 @@ class PaymentController extends Controller
         
         else if($result->orderStatus === 'Cancelled') {
             $payment->update(['status' => 'cancelled']);
-            $booking = $payment->booking;
+            // $booking = $payment->booking;
             $booking->tables()->detach();
         } 
         
         else if($result->orderStatus === 'Declined') {
             $payment->update(['status' => 'declined']);
-            $booking = $payment->booking;
+            // $booking = $payment->booking;
+            $booking->tables()->detach();
+        }
+        
+        else {
+            $payment->update(['status' => 'unknown']);
             $booking->tables()->detach();
         }
 

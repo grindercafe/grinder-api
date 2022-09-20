@@ -22,7 +22,7 @@ class BookingResource extends JsonResource
     {
         return [
             'id'=> $this->id,
-            'event'=> Event::find($this->event_id),
+            'event'=> new EventResource(Event::find($this->event_id)),
             'customer'=> Customer::findOrFail($this->customer_id),
             'total_price'=> $this->total_price,
             'is_message_sent'=> $this->is_message_sent,
