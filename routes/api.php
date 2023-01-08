@@ -1,12 +1,6 @@
 <?php
 
-use App\Models\Event;
-use App\Models\Table;
-use App\Models\Booking;
-use App\Models\Payment;
-use App\Models\BookingTable;
 use Illuminate\Http\Request;
-use App\Http\Resources\EventResource;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\LoginController;
@@ -90,9 +84,5 @@ Route::post('/payment', [PaymentController::class, 'createInvoice']);
 Route::get('/result', [PaymentController::class, 'result']);
 Route::get('/update_payment_status', [PaymentController::class, 'updatePaymentStatus']);
 
-Route::get('/test', function($q) {
-    $event = Event::findOrFail($id);
-    return $event->bookings;
-});
 // Route::post('test_payment', [PaymentController::class, 'createTestInvoice']);
 // Route::get('/test_result', [PaymentController::class, 'testResult']);

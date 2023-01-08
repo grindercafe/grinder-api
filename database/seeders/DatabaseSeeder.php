@@ -118,9 +118,9 @@ class DatabaseSeeder extends Seeder
         Table::create(['number'=> 1, 'capacity'=> 4]);
         Table::create(['number'=> 2, 'capacity'=> 4]);
         Table::create(['number'=> 3, 'capacity'=> 4]);
-        Customer::factory(300)->create();
-        Event::factory(200)->create();
-        Booking::factory(400)->create();
+        // Customer::factory(300)->create();
+        // Event::factory(200)->create();
+        // Booking::factory(400)->create();
 
 
     }
