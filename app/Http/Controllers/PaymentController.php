@@ -39,7 +39,7 @@ class PaymentController extends Controller
     {
         $body = [
             'amount' => $request->amount,
-            "callBackUrl" => 'https://api.grindercafe.net/api/result',
+            "callBackUrl" => env('PAYMENT_CALLBACK_URL'),
             "clientMobile" => $request->phone_number,
             "clientName" => $request->name,
             "orderNumber" => $request->name . Str::uuid()
@@ -81,7 +81,7 @@ class PaymentController extends Controller
         if ($result->orderStatus === 'Paid') {
             $payment->update(['status' => 'paid']);
 
-            $url = 'https://grindercafe.net/bookings/' . $booking->uuid . 
+            $url = env('PAYMENT_REDIRECT_URL') . '/bookings/' . $booking->uuid . 
             '?token=' . $booking->token; 
     
             return redirect()->away($url);
