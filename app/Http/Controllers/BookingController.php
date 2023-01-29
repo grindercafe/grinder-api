@@ -159,7 +159,6 @@ class BookingController extends Controller
     {
         $booking = Booking::findOrFail($id);
         $currentTables = $booking->tables;
-        $targetEvent = Event::findOrFail($request->event);
 
         if ($request->event) {
             $targetEvent = Event::findOrFail($request->event);
@@ -235,18 +234,6 @@ class BookingController extends Controller
         ]);
     }
 
-    public function cancel($id)
-    {
-        $booking = Booking::findOrFail($id);
-
-        $booking->update(['cancelled_at' => now()]);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'booking cancelled successfully',
-            'data' => $booking
-        ]);
-    }
 
     public function messageStatus($id)
     {

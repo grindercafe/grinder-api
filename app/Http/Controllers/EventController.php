@@ -29,6 +29,7 @@ class EventController extends Controller
     public function allEvents()
     {
         return EventResource::collection(
+            // Event::where('date', '>', Carbon::now())->orderBy('date', 'desc')->get()
             Event::orderBy('date', 'desc')->get()
         );
     }
@@ -144,10 +145,5 @@ class EventController extends Controller
         $event->unavailableTables()->attach($request->ids);
 
         $event->unavailableTables()->detach($request->removed_ids);
-    }
-
-    public function bookings_by_event($event_id)
-    {
-        return Booking::where('event_id', $event_id)->count();
     }
 }

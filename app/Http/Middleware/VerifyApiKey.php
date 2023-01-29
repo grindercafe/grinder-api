@@ -17,7 +17,7 @@ class VerifyApiKey
      */
     public function handle(Request $request, Closure $next)
     {
-        $api_key = $request->api_key;
+        $api_key = $request->header('Authorization');
         
         if(!$api_key) {
             return response()->json([
